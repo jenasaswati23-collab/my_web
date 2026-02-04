@@ -108,11 +108,13 @@
         .button-container {
             margin: 30px 0;
             position: relative;
-            min-height: 200px;
+            min-height: 100px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            gap: 15px;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .yes-button {
@@ -127,7 +129,7 @@
             box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
             transition: all 0.3s ease;
             font-family: 'Quicksand', sans-serif;
-            margin: 10px;
+            position: relative;
         }
 
         .yes-button:hover {
@@ -150,8 +152,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: 'Quicksand', sans-serif;
-            position: absolute;
-            margin: 10px;
+            position: relative;
         }
 
         .no-button:hover {
@@ -261,20 +262,21 @@
 
         function moveButton() {
             const noButton = document.getElementById('noButton');
-            const container = document.querySelector('.container');
             
-            // Get container dimensions
-            const containerRect = container.getBoundingClientRect();
+            // Get viewport dimensions
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
             const buttonRect = noButton.getBoundingClientRect();
             
-            // Calculate random position within container
-            const maxX = containerRect.width - buttonRect.width - 40;
-            const maxY = containerRect.height - buttonRect.height - 40;
+            // Calculate random position within viewport (with padding)
+            const maxX = viewportWidth - buttonRect.width - 20;
+            const maxY = viewportHeight - buttonRect.height - 20;
             
             const randomX = Math.random() * maxX;
             const randomY = Math.random() * maxY;
             
-            // Move the button
+            // Change to fixed positioning so it can move anywhere on screen
+            noButton.style.position = 'fixed';
             noButton.style.left = randomX + 'px';
             noButton.style.top = randomY + 'px';
             
@@ -287,7 +289,9 @@
                 "Maybe not? 🤔",
                 "Um, no? 😳",
                 "Nope! 🏃‍♀️",
-                "Catch me! 😜"
+                "Catch me! 😜",
+                "Try again! 😝",
+                "Almost! 🤭"
             ];
             noButton.textContent = texts[Math.floor(Math.random() * texts.length)];
         }
